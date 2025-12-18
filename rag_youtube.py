@@ -70,20 +70,30 @@ def build_chain(vectorstore):
         template="""
 You are a helpful assistant.
 Answer ONLY from the provided transcript context.
+Use the chat history to understand follow-up questions.
 If the context is insufficient, say "I don't know."
+
+Chat History:
+{chat_history}
 
 Context:
 {context}
 
 Question: {question}
 """,
-        input_variables=["context", "question"],
+        input_variables=["chat_history", "context", "question"],
     )
 
     chain = (
         RunnableParallel({
-            "context": retriever | RunnableLambda(format_docs),
-            "question": RunnablePassthrough()
+            # 🔑 IMPORTANT FIX: pass ONLY question to retriever
+            "context": RunnableLambda(lambda x: x["question"])
+                       | retriever
+                       | RunnableLambda(format_docs),
+
+            # Pass-through fields
+            "question": RunnableLambda(lambda x: x["question"]),
+            "chat_history": RunnableLambda(lambda x: x["chat_history"]),
         })
         | prompt
         | llm
