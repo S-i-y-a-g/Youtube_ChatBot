@@ -24,6 +24,16 @@ if "video_loaded" not in st.session_state:
 
 
 # -----------------------
+# Helpers
+# -----------------------
+def format_chat_history(messages, max_turns=6):
+    history = messages[-max_turns:]
+    return "\n".join(
+        f"{m['role']}: {m['content']}" for m in history
+    )
+
+
+# -----------------------
 # Sidebar
 # -----------------------
 with st.sidebar:
@@ -40,10 +50,10 @@ with st.sidebar:
     st.markdown(
         """
         **How it works**
-        1. Fetch transcript
-        2. Create embeddings
-        3. Store in FAISS
-        4. Chat using Llama 3
+        - Fetch transcript
+        - Create embeddings
+        - Store in FAISS
+        - Chat using Llama 3
         """
     )
 
@@ -51,10 +61,10 @@ with st.sidebar:
 # Main Header
 # -----------------------
 st.title("🎥 Chat with YouTube Video")
-st.caption("Open-source RAG app using Llama 3, FAISS, and LangChain")
+st.caption("RAG-based app with conversational memory (Llama 3 + FAISS)")
 
 # -----------------------
-# Load Video Logic
+# Load Video
 # -----------------------
 if load_btn:
     st.session_state.messages = []
@@ -72,36 +82,37 @@ if load_btn:
             st.session_state.chain = build_chain(vectorstore)
 
         st.session_state.video_loaded = True
-        st.success("✅ Video loaded successfully! Ask your questions below.")
+        st.success("✅ Video loaded! Start chatting below.")
 
 # -----------------------
 # Chat Interface
 # -----------------------
 if st.session_state.video_loaded:
 
-    # Display previous messages
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-    # Chat input
     user_input = st.chat_input("Ask a question about the video...")
 
     if user_input:
-        # Show user message
         st.session_state.messages.append(
             {"role": "user", "content": user_input}
         )
+
         with st.chat_message("user"):
             st.markdown(user_input)
 
-        # Generate response
+        chat_history = format_chat_history(st.session_state.messages)
+
         with st.chat_message("assistant"):
             with st.spinner("🤖 Thinking..."):
-                answer = st.session_state.chain.invoke(user_input)
+                answer = st.session_state.chain.invoke({
+                    "question": user_input,
+                    "chat_history": chat_history
+                })
                 st.markdown(answer)
 
-        # Save assistant message
         st.session_state.messages.append(
             {"role": "assistant", "content": answer}
         )
