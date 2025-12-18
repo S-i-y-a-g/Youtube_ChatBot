@@ -1,0 +1,28 @@
+# Core
+python-dotenv>=1.0.0
+
+# UI
+streamlit>=1.32.0
+
+# YouTube transcript
+youtube-transcript-api==1.2.3
+
+# LangChain (new modular structure)
+langchain>=0.2.0
+langchain-core>=0.2.0
+langchain-community>=0.2.0
+langchain-text-splitters>=0.2.0
+langchain-huggingface>=0.0.3
+
+# Embeddings
+sentence-transformers>=2.2.2
+torch>=2.0.0
+
+# Vector Store
+faiss-cpu>=1.7.4
+
+# Local LLM runtime
+ollama>=0.1.8
+
+# HTTP & utils (explicit for stability)
+requests>=2.31.0
