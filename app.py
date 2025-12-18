@@ -1,18 +1,14 @@
 import streamlit as st
 from rag_youtube import get_transcript, build_vectorstore, build_chain
 
-# -----------------------
-# Page Config
-# -----------------------
+#Page Config
 st.set_page_config(
     page_title="YouTube Video Chat",
     page_icon="🎥",
     layout="wide"
 )
 
-# -----------------------
-# Session State
-# -----------------------
+#Session State
 if "chain" not in st.session_state:
     st.session_state.chain = None
 
@@ -23,9 +19,7 @@ if "video_loaded" not in st.session_state:
     st.session_state.video_loaded = False
 
 
-# -----------------------
-# Helpers
-# -----------------------
+#Helpers
 def format_chat_history(messages, max_turns=6):
     history = messages[-max_turns:]
     return "\n".join(
@@ -33,9 +27,7 @@ def format_chat_history(messages, max_turns=6):
     )
 
 
-# -----------------------
-# Sidebar
-# -----------------------
+#Sidebar
 with st.sidebar:
     st.title("🎬 Load YouTube Video")
 
@@ -57,15 +49,11 @@ with st.sidebar:
         """
     )
 
-# -----------------------
-# Main Header
-# -----------------------
+#Header
 st.title("🎥 Chat with YouTube Video")
 st.caption("RAG-based app with conversational memory (Llama 3 + FAISS)")
 
-# -----------------------
-# Load Video
-# -----------------------
+#Load Video
 if load_btn:
     st.session_state.messages = []
     st.session_state.chain = None
@@ -84,9 +72,7 @@ if load_btn:
         st.session_state.video_loaded = True
         st.success("✅ Video loaded! Start chatting below.")
 
-# -----------------------
-# Chat Interface
-# -----------------------
+#Chat Interface
 if st.session_state.video_loaded:
 
     for msg in st.session_state.messages:
@@ -119,3 +105,4 @@ if st.session_state.video_loaded:
 
 else:
     st.info("👈 Enter a YouTube video ID in the sidebar to get started.")
+
