@@ -67,10 +67,27 @@ Context-Aware Answer
         ↓
 Streamlit Chat UI
         ↓
-Stored in Session (Conversational Memory) ```text
+Stored in Session (Conversational Memory)
+```
 
 ---
 
-## 
+## Conversational Memory 
+
+The application supports multi-turn conversations by maintaining a rolling window of recent chat history. This allows the system to:
+1. Understand follow-up questions
+2. Preserve contextual continuity
+3. Provide more natural, chat-like interactions
+ 
+Memory Characteristics:
+ 1. Session-based (Streamlit session state)
+
+2. Automatically injected into prompt construction
+
+3. Lightweight and fully local
+
+4. Resets when the application restarts
+
+5. This ensures coherent conversations rather than isolated question-answer pairs.
 
 
