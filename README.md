@@ -72,7 +72,7 @@ Stored in Session (Conversational Memory)
 
 ---
 
-## Conversational Memory 
+## 🧠Conversational Memory 
 
 The application supports multi-turn conversations by maintaining a rolling window of recent chat history. This allows the system to:
 1. Understand follow-up questions
@@ -80,14 +80,32 @@ The application supports multi-turn conversations by maintaining a rolling windo
 3. Provide more natural, chat-like interactions
  
 Memory Characteristics:
- 1. Session-based (Streamlit session state)
-
+1. Session-based (Streamlit session state)
 2. Automatically injected into prompt construction
-
 3. Lightweight and fully local
-
 4. Resets when the application restarts
-
 5. This ensures coherent conversations rather than isolated question-answer pairs.
+
+---
+
+## 🛠 Tech Stack
+
+1. Programming Language: Python
+2. LLM: Llama 3 (via Ollama)
+3. Framework: LangChain
+4. Vector Database: FAISS
+5. Embeddings: Sentence Transformers (MiniLM)
+6. Transcript API: youtube-transcript-api
+7. UI Framework: Streamlit
+8. Runtime: Fully local (no external APIs or cloud dependency)
+
+## Demo Video
+
+The demo showcases:
+1. Loading a YouTube video using its video ID
+2. Asking questions about the video content
+3. Asking follow-up questions using conversational memory
+
+Demo Video:
 
 
