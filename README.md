@@ -106,6 +106,6 @@ The demo showcases:
 2. Asking questions about the video content
 3. Asking follow-up questions using conversational memory
 
-Demo Video:
+Demo Video: https://drive.google.com/file/d/1np0YwixGpS5EqLwGm3XPX4HtdO8DBJTl/view?usp=sharing
 
 
